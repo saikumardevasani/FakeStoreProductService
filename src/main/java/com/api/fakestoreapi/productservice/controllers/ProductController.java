@@ -3,6 +3,7 @@ package com.api.fakestoreapi.productservice.controllers;
 import com.api.fakestoreapi.productservice.exceptions.ProductNotFoundException;
 import com.api.fakestoreapi.productservice.models.Product;
 import com.api.fakestoreapi.productservice.services.ProductService;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -17,7 +18,7 @@ public class ProductController {
 
     //ToDo: Implement below code with response entity for reference watch ResponseEntity Lecture
 
-    ProductController(ProductService productService){
+    ProductController(@Qualifier("SelfProductService") ProductService productService){
         this.productService = productService;
     }
     @GetMapping("/{id}")
@@ -51,5 +52,10 @@ public class ProductController {
     @PutMapping("{id}")
     public Product replaceProductById(@PathVariable("id") Long id,@RequestBody Product product){
         return productService.replaceProductById(id, product);
+    }
+
+    @PostMapping
+    public Product createProduct(@RequestBody Product product){
+        return productService.creteProduct(product);
     }
 }
